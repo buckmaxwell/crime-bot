@@ -49,7 +49,7 @@ def make_cn_report(report, session):
 
 def send_report(payload):
 	r = requests.post('http://crimenut.maxwellbuck.com/reports/new', json=payload)
-	print r
+	print r.text
 	try:
 		x = r.id
 		return True
