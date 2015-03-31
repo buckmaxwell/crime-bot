@@ -4,6 +4,7 @@ import json
 import timestring
 import requests
 import case
+from urllib2 import Request, urlopen, URLError
 
 TOKEN = '1d44bb7d-f8d7-4326-aae3-3acc0e4e1835'
 
