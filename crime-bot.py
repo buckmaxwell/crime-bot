@@ -8,6 +8,7 @@ import case
 TOKEN = '1d44bb7d-f8d7-4326-aae3-3acc0e4e1835'
 
 def get_lonlat(location):
+	print location
 	API_KEY = "AIzaSyAgw7ZFrTPcUB3okQqv8Ii2fNu_7091a_M"
 	location = location.replace (" ", "+")
 	"""Example location: 1600+Amphitheatre+Parkway,+Mountain+View,+CA"""
