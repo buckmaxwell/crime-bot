@@ -101,9 +101,9 @@ def report_jsonify(report, feed=True):
 	result["time_ended"]		= str(report.time_ended)
 	result["is_emergency"]		= str(report.is_emergency)
 	result["spam_count"]		= str(report.spam_count)
+	result["description"]		= str(report.description)
 
 	if not feed:
-		result["description"]		= str(report.description)
 		result["perpetrators"]		= get_perps_array(report)
 		result["property"]			= get_prop_array(report)
 		result["offenses"]			= get_offenses_array(report)
