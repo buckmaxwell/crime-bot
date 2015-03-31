@@ -6,6 +6,15 @@ import requests
 import case
 from urllib2 import Request, urlopen, URLError
 
+"""
+delete from cn_perpetrators;
+delete from cn_report_ohio_revised_code;
+delete from cn_stolen_property;
+delete from cn_comments;
+delete from cn_spamreport_user;
+delete from cn_reports;
+"""
+
 TOKEN = '1d44bb7d-f8d7-4326-aae3-3acc0e4e1835'
 
 def get_lonlat(location):
