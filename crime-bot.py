@@ -33,7 +33,7 @@ def make_cn_report(report, session):
 	TODO: THIS IS FOR DEMO ONLY--INCOMPLETE
 	'''
 	address_line1 			= str(report.house_number)+" "+str(report.street_prefix)+" "+str(report.street)+" "+str(report.street_suffix)
-	address_line1			= address_line1.strip('None')
+	address_line1			= address_line1.replace('None','')
 	lonlat  				= get_lonlat(address_line1+', Columbus OH')
 
 	j 						= json.loads('{}')
