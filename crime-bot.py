@@ -23,7 +23,7 @@ def get_lonlat(location):
        			lat = location_json["results"][0]["geometry"]["location"]["lat"]
        			lonlat.append(lon)
        			lonlat.append(lat)
-	except URLError, e:
+	except Exception as e:
 		print "get_lonlat(location):",e
 	return lonlat
 
