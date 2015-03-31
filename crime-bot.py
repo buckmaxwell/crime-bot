@@ -44,7 +44,7 @@ def make_cn_report(report, session):
 	j["lon_reported_from"]	= lonlat[0]
 	j["lat_reported_from"]  = lonlat[1]
 	j["description"]		= report.description
-	return json.dumps(j)
+	return j
 
 
 def send_report(payload):
