@@ -51,7 +51,7 @@ def send_report(payload):
 	r = requests.post('http://crimenut.maxwellbuck.com/reports/new', json=payload)
 	resp = json.loads(r.text)
 	try:
-		x = resp.id
+		x = resp["id"]
 		return True
 	except Exception as e:
 		print e
