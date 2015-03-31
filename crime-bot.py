@@ -49,9 +49,9 @@ def make_cn_report(report, session):
 
 def send_report(payload):
 	r = requests.post('http://crimenut.maxwellbuck.com/reports/new', json=payload)
-	print r.text
+	resp = json.loads(r.text)
 	try:
-		x = r.id
+		x = resp.id
 		return True
 	except Exception as e:
 		print e
