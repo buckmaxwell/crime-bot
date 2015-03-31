@@ -1,0 +1,42 @@
+public | businesses         | table | crimeapp
+public | case_business      | table | crimeapp
+public | case_offense       | table | crimeapp
+public | case_person        | table | crimeapp
+public | cases              | table | crimeapp
+public | offenses           | table | crimeapp
+public | officers           | table | crimeapp
+public | ohio_revised_codes | table | crimeapp 
+public | people             | table | crimeapp
+public | property_types     | table | crimeapp
+public | stolen_property    | table | crimeapp
+public | subjects           | table | crimeapp
+
+#DELETE
+delete from businesses;
+delete from case_business;
+delete from case_offense;
+delete from case_person;       
+delete from cases;             
+delete from offenses;           
+delete from officers;         
+delete from ohio_revised_codes;
+delete from people; 
+delete from property_types;  
+delete from stolen_property; 
+delete from subjects;  
+
+
+some test ids 
+
+#caseID = 4022000 #4030123 the crime to start with then iterate through
+#caseID = 4022001 # (There were no arrestees.)
+#caseID = 4022007 #has arestee (This was not a property crime.)
+#caseID = 4030094 #buisness (There were no arrestees.)
+#caseID = 4022020
+#caseID = 4030123 #assault 254
+#caseID = 4030900 #criminal endangering
+#caseID = 4031400
+#caseID = 4022090 #multiple offenses, non-uniform title, badge 0
+#caseID = 4030134 #victim is a buisness
+
+

@@ -3,18 +3,12 @@ from sqlalchemy import create_engine
 #
 from db import Base
 #import all
+import case
+import people_businesses
 import property
 import subject
+import officer
 import offenses
-#
-import cn_users
-import cn_reports
-import cn_property
-import cn_perpetrators
-import cn_report_orc
-import cn_comments
-import cn_spamreport_user
-#
 import db
 
 #

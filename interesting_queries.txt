@@ -1,0 +1,177 @@
+Number of STOLEN items:
+
+--stolen_property table is misleading in name--it includes acts of vandalism and criminal damaging
+
+select count(*) from stolen_property sp join case_offense co on sp."caseID"=co.case
+where co.lcode=2913.02;
+
+Value of all stolen property:
+
+crimedb=# select sum(value) from stolen_property sp join case_offense co on sp."caseID"=co.case
+where co.lcode=2913.02;
+
+Officers to number of reports made:
+
+select c.badge,count(*) from cases c
+join officers o
+on o.badge = c.badge
+group by c.badge
+order by count(*) desc;
+
+
+List of repeat offenders:
+
+select * from (select fname,lname,sex,race,count(p.id) as cnt from case_person cp
+join people p
+on p.id = cp.person
+join cases c
+on c.id=cp.case where is_victim=False group by p.id) as subq
+where cnt > 1;
+
+Offeses by count:
+
+select lcode,count(lcode) from case_offense
+group by lcode order by count(lcode) desc;
+
+Number of repeat offenders:
+
+select ((select count(*) from case_person where is_victim=False)-(select count(*) from (select count(person) from case_person where is_victim=False group by person) as subq));
+
+Number of repeat victims:
+
+select ((select count(*) from case_person where is_victim=True)-(select count(*) from (select count(person) from case_person where is_victim=True group by person) as subq));
+
+Number of repeat people:
+
+select ((select count(*) from case_person)-(select count(*) from (select count(person) from case_person group by person) as subq));
+
+
+Crimes by arrestee:
+
+select 
+	fname || ' ' || mname || ' ' || lname || ' ' || name_suffix as fullname,
+	count(*)
+from 
+	cases c
+	join (select * from case_person cp where not cp.is_victim) arr
+		on c.id = arr.case
+	join people p
+		on arr.person = p.id
+group by
+	fullname
+order by 
+	fullname;
+
+Names by number of crimes, excluding boring cases (THIS QUERY SHOULD BE REVISED TO IGNORE)
+
+select * from(
+	select 
+		lname as name,              -- Substitute lname for whatever you like
+		count(*) as crimes
+	from 
+		cases c
+		join 
+                        (select * 
+                         from case_person cp 
+                         where not cp.is_victim)  -- Could also do true here
+                         arr
+			on c.id = arr.case
+		join people p
+			on arr.person = p.id
+	group by
+		name
+	order by 
+		crimes desc, name) amounts
+where crimes > 1;
+
+
+Michael-on-Michael crime:
+
+select count(c.id)
+from people p
+join (select * from case_person cp where not cp.is_victim) perps
+	on perps.person = p.id
+join cases c
+	on perps.case = c.id
+inner join
+	(select c.id as caseid
+	from people p
+		join (select * from case_person cp where cp.is_victim) vics
+			on vics.person = p.id
+		join cases c
+			on vics.case = c.id
+	where p.fname like '%Michael%') 
+	michael_vic
+on michael_vic.caseid = c.id;
+
+
+Cases by badge number:
+
+select badge, count(*) as count
+from cases
+group by badge
+order by count desc;
+
+Cases by last name of officer:
+
+select o.last_name as gb, count(*) as count
+from cases c
+	join officers o
+		on c.badge = o.badge
+group by gb
+order by count desc;
+
+
+Crimes in order of frequency:
+
+select (subjectcode, s.description) as gb, count(*) as count
+from cases c
+	join subjects s
+		on c.subjectcode like s.code
+group by gb
+order by count desc;
+
+Officer specialization in a particular type of crime:
+
+select (subjectcode, s.description) as offense,
+	o.last_name,
+	count(*) as count
+from cases c
+	join subjects s
+		on c.subjectcode like s.code
+	join officers o
+		on o.badge = c.badge
+group by o.last_name, offense
+order by o.last_name, count desc;
+
+Stolen items by value:
+
+select 
+	value,
+	count(*)
+from stolen_property 
+group by value
+order by count desc;
+
+Stolen items by manufacturer (you can infer item type):
+
+select 
+	manufacturer,
+	count(*)
+from stolen_property 
+group by manufacturer
+order by count desc;
+
+Stolen items by manufacturer and value ($200 iPhone is hot):
+
+select 
+	value,
+	manufacturer,
+	count(*)
+from stolen_property 
+where manufacturer is not null and manufacturer != ''
+group by manufacturer, value
+order by count desc, value desc;
+
+
+
