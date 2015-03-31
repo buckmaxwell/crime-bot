@@ -55,7 +55,9 @@ def send_report(payload):
 
 
 def get_reports(session):
-	reports = session.query(case.Case).filter(case.Case.report_date > str(timestring.now().day-1)).all()
+	yesterday = timestring.now()
+	yesterday.day-=1
+	reports = session.query(case.Case).filter(case.Case.report_date > str(yesterday)).all()
 	for report in reports:
 		r = make_cn_report(report, session)
 		send_report(r)
