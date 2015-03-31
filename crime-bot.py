@@ -49,6 +49,7 @@ def make_cn_report(report, session):
 
 def send_report(payload):
 	r = requests.post("http://crimenut.maxwellbuck.com/reports/new", data=payload)
+	print r
 	try:
 		x = r.id
 		return True
@@ -62,8 +63,11 @@ def get_reports(session):
 	yesterday.day-=1
 	reports = session.query(case.Case).filter(case.Case.report_date > str(yesterday)).all()
 	for report in reports:
-		r = make_cn_report(report, session)
-		send_report(r)
+		try:
+			r = make_cn_report(report, session)
+			send_report(r)
+		except Exception as e:
+			print e
 
 
 def start():
